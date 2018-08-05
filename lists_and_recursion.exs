@@ -12,4 +12,7 @@ defmodule ListsAndRecursion do
 
   def caesar([], n), do: []
   def caesar([head | tail], n), do: [ head + n | caesar(tail, n) ]
+
+  def span(from, from), do: [from] 
+  def span(from, to), do: [from | span(from + 1, to)]
 end
