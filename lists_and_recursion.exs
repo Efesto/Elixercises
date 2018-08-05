@@ -15,4 +15,14 @@ defmodule ListsAndRecursion do
 
   def span(from, from), do: [from] 
   def span(from, to), do: [from | span(from + 1, to)]
+
+  def my_all?([a], func), do: func.(a) 
+  def my_all?([head | tail], func) do
+    func.(head) && my_all?(tail, func)
+  end
+
+  def my_each([a], func), do: [func.(a)]
+  def my_each([head|tail], func) do
+    [func.(head) | my_each(tail, func)]
+  end
 end
