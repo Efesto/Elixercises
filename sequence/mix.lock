@@ -1,0 +1,3 @@
+%{
+  "distillery": {:hex, :distillery, "1.5.4", "d72e52c41bb9933a3dd1aedcab3406ac1e7b758e4fe375e84ef7e45689bdfa43", [:mix], [], "hexpm"},
+}

@@ -2,6 +2,8 @@ defmodule Sequence.Server do
   # This adds the GenServer behavior
   use GenServer
 
+  @vsn 0
+
   def init(_) do
     {:ok, Sequence.Stash.get()}
   end
