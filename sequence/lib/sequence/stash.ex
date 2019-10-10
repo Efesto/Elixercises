@@ -3,7 +3,7 @@ defmodule Sequence.Stash do
   @name __MODULE__
 
   def start_link(initial_value) do
-    GenServer.start_link(__MODULE__, initial_value, name: @name)
+    GenServer.start_link(__MODULE__, initial_value, [debug: [:trace], name: @name])
   end
 
   def get do

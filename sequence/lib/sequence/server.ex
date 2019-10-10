@@ -9,7 +9,7 @@ defmodule Sequence.Server do
   end
 
   def start_link(current_number) do
-    GenServer.start_link(__MODULE__, current_number, name: __MODULE__)
+    GenServer.start_link(__MODULE__, current_number, [debug: [:trace], name: __MODULE__])
   end
 
   def increment_number(delta) do
