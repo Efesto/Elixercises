@@ -1,4 +1,5 @@
 defmodule Enigma do
+  # this tells to the compile to recompile the code when the external resource file changes
   @external_resource enigma_code_path = Path.join([__DIR__, "enigma.txt"])
 
   for line <- File.stream!(enigma_code_path, [], :line) do
@@ -12,4 +13,4 @@ defmodule Enigma do
   def decode(_code), do: ""
 end
 
-# TODO: How to inspect methods of Enigma?
+# Enigma.__info__(:functions) for listing module functions
