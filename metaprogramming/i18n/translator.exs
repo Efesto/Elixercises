@@ -47,10 +47,28 @@ defmodule Translator do
       if Keyword.keyword?(val) do
         deftranslations(locale, path, val)
       else
-        quote do
-          def t(unquote(locale), unquote(path), bindings) do
-            unquote(interpolate(val))
-          end
+        case val do
+          [string, :singular] ->
+            quote do
+              def t(unquote(locale), unquote(path), bindings = %{count: 1}) do
+                unquote(interpolate(string))
+              end
+            end
+
+          [string, :plural] ->
+            quote do
+              def t(unquote(locale), unquote(path), bindings = %{count: count})
+                  when (is_integer(count) and count > 1) or count <= 0 do
+                unquote(interpolate(string))
+              end
+            end
+
+          _ ->
+            quote do
+              def t(unquote(locale), unquote(path), bindings) do
+                unquote(interpolate(val))
+              end
+            end
         end
       end
     end
@@ -64,11 +82,11 @@ defmodule Translator do
     |> Regex.split(string, on: [:head, :tail])
     |> Enum.reduce("", fn
       <<"%{" <> rest>>, acc ->
-        key = String.to_atom(String.rstrip(rest, ?}))
+        key = String.to_atom(String.trim_trailing(rest, "}"))
 
         quote do
           # This ast is included directly in the function body so we can access bindings directly as they share the same context
-          unquote(acc) <> to_string(Dict.fetch!(bindings, unquote(key)))
+          unquote(acc) <> to_string(Map.fetch!(bindings, unquote(key)))
         end
 
       segment, acc ->
