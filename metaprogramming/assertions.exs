@@ -97,3 +97,6 @@ defmodule MathTests do
     assert 5 >= 3
   end
 end
+
+# DONE: run test cases in parallel
+# TODO: add report for the module. include PASS/FAIL counts and execution time
